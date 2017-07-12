@@ -10,6 +10,7 @@ const buttonEvents = () => {
         .subscribe((count) => console.log(`clicked ${count}`));
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
     let observable = Rx.Observable.create((observer) => {
             let id = setInterval(() => {
