@@ -82,8 +82,60 @@ const subjectMulty = () => {
             }
         });
     }, 3000);
-}
+};
+
+const observableMulty = () => {
+    let obs = Rx.Observable.from([1, 2, 3, 4]),
+        sub = new Rx.Subject(),
+        multicast = obs.multicast(sub);
+
+    multicast.subscribe({
+        next: console.log
+    });
+
+    multicast.subscribe({
+        next: console.log
+    });
+
+    multicast.connect();
+};
+
+const behSubject = () => {
+    let sub = new Rx.BehaviorSubject(0);
+
+    sub.subscribe({
+        next: console.log
+    });
+
+    sub.next(1);
+    sub.next(3);
+
+    sub.subscribe({
+        next: (v) => console.log(`! - ${v}`)
+    });
+
+    sub.next(4);
+};
+
+const replaySub = () => {
+    let sub = new Rx.ReplaySubject(3);
+
+    sub.subscribe({
+        next: console.log
+    });
+
+    sub.next(1);
+    sub.next(2);
+    sub.next(3);
+    sub.next(4);
+
+    sub.subscribe({
+        next: (v) => console.log(`! - ${v}`)
+    });
+
+      sub.next(5);
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-    subjectMulty();
+    replaySub();
 });
