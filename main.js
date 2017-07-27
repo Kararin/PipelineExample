@@ -155,6 +155,19 @@ const customOp = () => {
     newObs.subscribe(console.log);
 }
 
+const simpleAsyncScheduler = () => {
+    let obs = Rx.Observable.create(function (observer) {
+            observer.next(1);
+            observer.next(3);
+            observer.next(5);
+            observer.complete();
+        }).observeOn(Rx.Scheduler.async);
+
+    console.log('before subscribe');
+    obs.subscribe(console.log);
+    console.log('after subscribe');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    customOp();
+    simpleAsyncScheduler();
 });
