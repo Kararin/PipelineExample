@@ -136,6 +136,25 @@ const replaySub = () => {
       sub.next(5);
 };
 
+const awecomeOp = (input) => {
+    let out = Rx.Observable.create(function (obs) {
+            input.subscribe({
+                next: (v) => obs.next(`${v} is awesome`),
+                error: (err) => obs.err(err),
+                complete: () => obs.complete()
+            });
+
+        });
+    return out;
+};
+
+const customOp = () => {
+    let obs = Rx.Observable.from([1, 2, 3, 4]),
+        newObs = awecomeOp(obs);
+
+    newObs.subscribe(console.log);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    replaySub();
+    customOp();
 });
